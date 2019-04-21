@@ -1,4 +1,6 @@
-# task
+# Gitlab Scrim
+
+Software to manager GitLab projects with scrum process
 
 ## Project setup
 ```
