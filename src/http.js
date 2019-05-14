@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const host = ''
+const host = 'https://gitlab.com/api/v4'
 
 const headers = {
-  "PRIVATE-TOKEN": "dy6DevfXXfLMmibwToxc"
+  "PRIVATE-TOKEN": "rx6_Byha1VfFJMztXnoZ"
 };
 
 export default {

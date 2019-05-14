@@ -1,8 +1,23 @@
 import http from "../../http";
 
+const STATS = {
+  qtn: {
+    Historias: 0,
+    Doing: 0,
+    Done: 0,
+    Issues: 0,
+    all: {
+      Done: 0,
+      Doing: 0
+    }
+  }
+};
+
 const state = {
   boards: [],
   issues: [],
+  historiasDoUsuario: [],
+  stats: {...STATS},
   currentIssue: {},
   labels: [],
   loading: false
@@ -14,6 +29,9 @@ const mutations = {
   },
   issues(state, issues) {
     state.issues = issues;
+  },
+  historiasDoUsuario(state, historias) {
+    state.historiasDoUsuario = historias;
   },
   labels(state, labels) {
     state.labels = labels;
@@ -61,6 +79,50 @@ const actions = {
       .catch(() => {
         commit("loadingOff");
       });
+  },
+  getHistoriasDoUsuario({ commit, state, rootState }) {
+    const options = {
+      labels: "Sprint backlog, Histórias dos usuários",
+      state: "opened"
+    };
+    http
+      .get(`/projects/${rootState.projects.currentProject.id}/issues`, options)
+      .then(res => {
+        let historias = {};
+        state.stats.qtn.Historias = res.data.length;
+        res.data.forEach(historia => {
+          historias[historia.iid] = { ...historia, issues: [] };
+        });
+        commit("historiasDoUsuario", historias);
+      })
+      .catch(() => {});
+  },
+  loadIssuesToHistorias({ state, rootState }, options) {
+    http
+      .get(`/projects/${rootState.projects.currentProject.id}/issues`, options)
+      .then(res => {
+        const issues = res.data;
+        state.stats.qtn.Issues += issues.length;
+        state.stats.qtn.all[options.labels] += issues.length;
+
+        const regex = /(#)\w+/;
+        issues.forEach(issue => {
+          const result = regex.exec(issue.title);
+          if (result) {
+            const historiaId = result[0].replace("#", "");
+            state.historiasDoUsuario[historiaId].issues.push({
+              ...issue,
+              color: options.labels === "Doing" ? "red" : "blue"
+            });
+            if (!state.historiasDoUsuario[historiaId].qtn)
+              state.historiasDoUsuario[historiaId].qtn = { Doing: 0, Done: 0 };
+            state.historiasDoUsuario[historiaId].qtn[options.labels]++;
+            // stats sprint
+            state.stats.qtn[options.labels]++;
+          }
+        });
+      })
+      .catch(() => {});
   },
   getLabels({ commit, rootState }) {
     commit("loadingOn");

@@ -8,7 +8,7 @@ export default {
     props: ['value'],
     methods: {
         getIssues(){
-            this.$store.dispatch("getIssues", {labels: [this.value.name]})
+            this.$store.dispatch("getIssues", {labels: this.value.name})
         }
     }
 }

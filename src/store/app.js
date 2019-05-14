@@ -7,17 +7,12 @@ export default {
     title: "Issues",
     routes: [
       {
-        name: "Grupos",
-        path: "/groups"
-      },
-      {
-        name: "Projetos",
-        path: "/projects"
-      },
-
-      {
         name: "Issues",
         path: "/issues"
+      },
+      {
+        name: "Sprint",
+        path: "/sprint"
       }
     ]
   },

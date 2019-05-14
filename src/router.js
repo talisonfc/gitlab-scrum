@@ -5,6 +5,7 @@ import Groups from './pages/Groups.vue'
 import Projects from './pages/Projects.vue'
 import Issues from './pages/Issues.vue'
 import Issue from './pages/Issue.vue'
+import Sprint from './pages/Sprint.vue'
 
 Vue.use(Router)
 
@@ -30,6 +31,10 @@ export default new Router({
     {
       path: '/issue',
       component: Issue
+    },
+    {
+      path: '/sprint',
+      component: Sprint
     }
   ]
 })

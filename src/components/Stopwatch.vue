@@ -36,7 +36,7 @@ export default {
     };
   },
   computed: mapState({
-    currentIssue: state => state.gitlab.currentIssue
+    currentIssue: state => state.issues.currentIssue
   }),
   methods: {
     change() {

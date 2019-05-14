@@ -8,9 +8,11 @@ const state = {
 const mutations = {
   projects(state, projects) {
     state.projects = projects;
+    localStorage.projects = JSON.stringify(projects)
   },
   project(state, project){
     state.projects.push(project)
+    sessionStorage.projects = JSON.stringify(state.projects)
   },
   currentProject(state, project){
     state.currentProject = project

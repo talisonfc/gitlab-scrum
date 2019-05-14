@@ -57,6 +57,8 @@ export default {
   },
   created() {
     this.$store.commit("title", "Home");
+    let temp = JSON.parse(sessionStorage.projects)
+    this.$store.commit("projects", temp)
   }
 };
 </script>

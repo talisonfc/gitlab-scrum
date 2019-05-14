@@ -10,6 +10,8 @@
     </v-toolbar>
 
     <stopwatch/>
+    {{issue.web_url}}
+    <a :href="issue.web_url">open</a>
     <v-card>
       <v-card-title>
         <div>
@@ -17,7 +19,6 @@
           <vue-markdown>{{ issue.description }}</vue-markdown>
         </div>
       </v-card-title>
-
       <v-card-text>
         <author v-bind:author="issue.author"/>
       </v-card-text>
@@ -52,7 +53,7 @@
 import VueMarkdown from "vue-markdown";
 import Author from "../components/Author";
 import Stopwatch from "../components/Stopwatch";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
 export default {
   name: "Issue",
@@ -71,8 +72,8 @@ export default {
       this.$router.go(-1);
     }
   },
-  created(){
-    this.$store.commit('title', 'Issue')
+  created() {
+    this.$store.commit("title", "Issue");
   }
 };
 </script>
